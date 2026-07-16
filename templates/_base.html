@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<style>
+@font-face {
+  font-family: 'Boogaloo';
+  src: url('data:font/woff2;base64,{{font_display}}') format('woff2');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Outfit';
+  src: url('data:font/woff2;base64,{{font_body}}') format('woff2');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Outfit';
+  src: url('data:font/woff2;base64,{{font_body_semibold}}') format('woff2');
+  font-weight: 600;
+}
+@font-face {
+  font-family: 'Outfit';
+  src: url('data:font/woff2;base64,{{font_body_bold}}') format('woff2');
+  font-weight: 800;
+}
+
+:root {
+  --bg:       #07070E;
+  --bg2:      #0D0D1A;
+  --bg3:      #12121F;
+  --orange:   #FF6B35;
+  --orange2:  #FF3366;
+  --purple:   #7C3AED;
+  --purple2:  #4F46E5;
+  --green:    #10B981;
+  --gold:     #FFD700;
+  --white:    #FFFFFF;
+  --white60:  rgba(255,255,255,0.6);
+  --white40:  rgba(255,255,255,0.4);
+  --white20:  rgba(255,255,255,0.2);
+  --white08:  rgba(255,255,255,0.08);
+  --white04:  rgba(255,255,255,0.04);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  width: 1080px;
+  height: 1080px;
+  background: var(--bg);
+  font-family: 'Outfit', sans-serif;
+  color: var(--white);
+  overflow: hidden;
+  position: relative;
+}
+
+.card {
+  width: 1080px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* Background dots */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glow blobs */
+.glow-tl {
+  position: absolute;
+  top: -15%;
+  left: -10%;
+  width: 55%;
+  height: 55%;
+  background: radial-gradient(circle, rgba(124,58,237,0.18), transparent 70%);
+  pointer-events: none;
+}
+.glow-br {
+  position: absolute;
+  bottom: -15%;
+  right: -10%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle, rgba(255,107,53,0.12), transparent 70%);
+  pointer-events: none;
+}
+
+/* Brand footer bar */
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background: rgba(255,255,255,0.03);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 56px;
+  z-index: 10;
+}
+.footer-handle {
+  font-family: 'Boogaloo', cursive;
+  font-size: 26px;
+  color: var(--white40);
+  letter-spacing: 1px;
+}
+.footer-url {
+  font-family: 'Boogaloo', cursive;
+  font-size: 26px;
+  color: var(--orange);
+  letter-spacing: 1px;
+}
+.footer-logo {
+  font-family: 'Boogaloo', cursive;
+  font-size: 28px;
+  color: var(--white);
+  letter-spacing: 2px;
+}
+
+/* Orange gradient text */
+.grad-text {
+  background: linear-gradient(135deg, #fff 0%, #FF6B35 50%, #7C3AED 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Tag pill */
+.tag {
+  display: inline-block;
+  background: rgba(255,107,53,0.15);
+  border: 1.5px solid rgba(255,107,53,0.35);
+  border-radius: 100px;
+  padding: 8px 24px;
+  font-family: 'Boogaloo', cursive;
+  font-size: 22px;
+  color: var(--orange);
+  letter-spacing: 2px;
+}
+
+/* Content area */
+.content {
+  position: relative;
+  z-index: 5;
+  padding: 70px 70px 100px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+</style>
+</head>
+<body>
+{{__base}}
+</body>
+</html>

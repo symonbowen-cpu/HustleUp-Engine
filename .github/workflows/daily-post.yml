@@ -1,0 +1,154 @@
+name: Daily Instagram Post
+
+on:
+  schedule:
+    # 9am Pacific Time (UTC-7/8) = 4pm or 5pm UTC
+    # Adjust for your timezone
+    - cron: '0 16 * * *'
+  workflow_dispatch:  # manual trigger for testing
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate post
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: npm run generate
+
+      - name: Commit generated image
+        run: |
+          git config user.name "HustleUp Bot"
+          git config user.email "bot@hustleup.us"
+          git add out/pending/ content/state.json
+          git commit -m "chore: daily post $(date -u +%Y-%m-%d)"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get commit SHA
+        id: sha
+        run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Publish or create approval issue
+        if: vars.AUTO_PUBLISH == 'true'
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_GRAPH_HOST: ${{ vars.IG_GRAPH_HOST || 'graph.facebook.com' }}
+          GITHUB_SHA: ${{ steps.sha.outputs.sha }}
+        run: npm run publish:ig
+
+      - name: Create approval issue
+        if: vars.AUTO_PUBLISH != 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const post = JSON.parse(fs.readFileSync('out/pending/post.json', 'utf8'));
+            const sha = '${{ steps.sha.outputs.sha }}';
+            const imageUrl = `https://raw.githubusercontent.com/${context.repo.owner}/${context.repo.repo}/${sha}/out/pending/post.png`;
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `📸 Daily Post — ${new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'})}`,
+              body: `## Today's HustleUp Post\n\n**Pillar:** ${post.pillar}\n**Topic:** ${post.topic}\n\n![Post Preview](${imageUrl})\n\n**Caption:**\n\`\`\`\n${post.caption}\n\`\`\`\n\n---\n\nComment \`/approve\` to publish to Instagram.\nComment \`/skip\` to discard this post.`,
+              labels: ['content-approval']
+            });
+
+  approve:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issue_comment' && contains(github.event.comment.body, '/approve')
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get image SHA from issue
+        id: get_sha
+        uses: actions/github-script@v7
+        with:
+          result-encoding: string
+          script: |
+            const body = context.payload.issue.body;
+            const match = body.match(/\/([a-f0-9]{40})\/out/);
+            return match ? match[1] : 'main';
+
+      - name: Publish to Instagram
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_GRAPH_HOST: ${{ vars.IG_GRAPH_HOST || 'graph.facebook.com' }}
+          GITHUB_SHA: ${{ steps.get_sha.outputs.result }}
+        run: npm run publish:ig
+
+      - name: Close issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body: '✅ Published to Instagram!'
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              state: 'closed'
+            });
+
+  skip:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issue_comment' && contains(github.event.comment.body, '/skip')
+    permissions:
+      issues: write
+
+    steps:
+      - name: Close issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body: '⏭️ Post skipped.'
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              state: 'closed'
+            });

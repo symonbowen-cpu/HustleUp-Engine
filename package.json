@@ -1,0 +1,16 @@
+{
+  "name": "hustleup-content-engine",
+  "version": "1.0.0",
+  "description": "Autonomous daily Instagram content engine for HustleUp",
+  "private": true,
+  "scripts": {
+    "generate": "node src/generate.js",
+    "generate:dry": "DRY_RUN=1 node src/generate.js",
+    "publish:ig": "node src/publish.js"
+  },
+  "dependencies": {
+    "@fontsource/boogaloo": "^5.2.8",
+    "@fontsource/outfit": "^5.2.8",
+    "puppeteer": "^25.3.0"
+  }
+}
