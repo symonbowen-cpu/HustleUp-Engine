@@ -42,8 +42,10 @@ npm run make:audio         # Regenerate the music/SFX library
 
 ## Reels
 
-On reel days (`reels.days` in `content/themes.json`, default Mon/Wed/Fri LA time)
-the engine renders a 12-second animated 9:16 video instead of a static image:
+Reels run **daily** by default (`reels.days` in `content/themes.json` — remove
+days there to bring back static-image days). Each run renders a 12-second
+animated 9:16 video. Manual runs (Actions → Run workflow) have a **format**
+dropdown to force a reel or a static post for that run:
 
 - Animated versions of every template (staggered text, count-up stats, CTA pulse)
   live in `templates/reels/`. Beats are declared in the markup via

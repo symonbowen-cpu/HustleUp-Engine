@@ -6,6 +6,15 @@ on:
     # Adjust for your timezone
     - cron: '0 16 * * *'
   workflow_dispatch:  # manual trigger for testing
+    inputs:
+      format:
+        description: 'Post format'
+        type: choice
+        options:
+          - auto
+          - reel
+          - static
+        default: auto
   issue_comment:
     types: [created]  # needed for /approve and /skip commands
 
@@ -35,6 +44,8 @@ jobs:
       - name: Generate post
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # manual runs can force a format; 'auto' / scheduled runs use themes.json
+          FORMAT: ${{ inputs.format != 'auto' && inputs.format || '' }}
         run: npm run generate
 
       - name: Commit generated image
