@@ -1,7 +1,9 @@
 {
-  "postCount": 0,
-  "pillarIndex": 0,
-  "topicIndexes": {},
-  "lastPosted": null,
+  "postCount": 1,
+  "pillarIndex": 1,
+  "topicIndexes": {
+    "hustle_spotlight": 1
+  },
+  "lastPosted": "2026-07-19T02:21:02.269Z",
   "history": []
 }
