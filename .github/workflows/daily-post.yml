@@ -6,12 +6,16 @@ on:
     # Adjust for your timezone
     - cron: '0 16 * * *'
   workflow_dispatch:  # manual trigger for testing
+  issue_comment:
+    types: [created]  # needed for /approve and /skip commands
 
 jobs:
   post:
     runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     permissions:
       contents: write
+      issues: write
 
     steps:
       - name: Checkout
@@ -38,7 +42,7 @@ jobs:
           git config user.name "HustleUp Bot"
           git config user.email "bot@hustleup.us"
           git add out/pending/ content/state.json
-          git commit -m "chore: daily post $(date -u +%Y-%m-%d)"
+          git diff --staged --quiet || git commit -m "chore: daily post $(date -u +%Y-%m-%d)"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -76,7 +80,7 @@ jobs:
 
   approve:
     runs-on: ubuntu-latest
-    if: github.event_name == 'issue_comment' && contains(github.event.comment.body, '/approve')
+    if: github.event_name == 'issue_comment' && contains(github.event.comment.body, '/approve') && contains(github.event.issue.labels.*.name, 'content-approval')
     permissions:
       contents: read
       issues: write
@@ -131,7 +135,7 @@ jobs:
 
   skip:
     runs-on: ubuntu-latest
-    if: github.event_name == 'issue_comment' && contains(github.event.comment.body, '/skip')
+    if: github.event_name == 'issue_comment' && contains(github.event.comment.body, '/skip') && contains(github.event.issue.labels.*.name, 'content-approval')
     permissions:
       issues: write
 

@@ -34,14 +34,17 @@ function buildHTML(templateName, data) {
   const base = fs.readFileSync(path.join(TEMPLATES, "_base.html"), "utf8");
   const tpl = fs.readFileSync(path.join(TEMPLATES, `${templateName}.html`), "utf8");
 
-  const baseFilled = fill(base, {
+  // Fill the content fragment with post data, then insert it into the
+  // styled base document at its {{__base}} slot.
+  const content = fill(tpl, data);
+
+  return fill(base, {
     font_display: fontB64("@fontsource/boogaloo/files/boogaloo-latin-400-normal.woff2"),
     font_body: fontB64("@fontsource/outfit/files/outfit-latin-400-normal.woff2"),
     font_body_semibold: fontB64("@fontsource/outfit/files/outfit-latin-600-normal.woff2"),
     font_body_bold: fontB64("@fontsource/outfit/files/outfit-latin-800-normal.woff2"),
+    __base: content,
   });
-
-  return fill(tpl, { ...data, __base: baseFilled });
 }
 
 module.exports = {

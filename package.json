@@ -12,5 +12,8 @@
     "@fontsource/boogaloo": "^5.2.8",
     "@fontsource/outfit": "^5.2.8",
     "puppeteer": "^25.3.0"
+  },
+  "allowScripts": {
+    "puppeteer@25.3.0": true
   }
 }
