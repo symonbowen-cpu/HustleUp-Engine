@@ -95,7 +95,7 @@ const SCHEMAS = {
 async function writeCopy(cfg, pillar, topic) {
   if (process.env.DRY_RUN === "1") return cannedCopy(pillar);
 
-  const prompt = `You write Instagram content for ${cfg.brand.name} (${cfg.brand.url}), an app that teaches teens 13-19 to make real money through side hustles. Price: ${cfg.brand.price} lifetime access.
+  const prompt = `You write social media content (Instagram + Facebook) for ${cfg.brand.name} (${cfg.brand.url}), an app that teaches teens 13-19 to make real money through side hustles. Price: ${cfg.brand.price} lifetime access.
 
 Brand voice: ${cfg.brand.voice}
 
@@ -104,7 +104,8 @@ Goal: ${pillar.goal}
 Topic: ${topic}
 
 Rules:
-- Speak directly to teens OR parents depending on the pillar. Parent pillar = speak to parents. All others = speak to teens.
+- ALWAYS speak directly to PARENTS of teens. Parents are the buyer. The teen is the subject of the content, never the audience. Say "your teen", not "you", when describing who does the hustle.
+- Tap real parent emotions: pride, worry about screen time, wanting their kid to have direction and confidence. Never guilt-trip or bash teens.
 - caption: 3-5 short lines. Hook first line. One concrete takeaway. End with a soft CTA from these options: ${cfg.brand.cta_options.join(", ")}. Max 1-2 emojis. Never use em dashes.
 - hashtags: pick 8-12 from this bank plus 2-3 topical ones: ${cfg.hashtag_bank.join(" ")}
 - alt_text: one sentence describing the image for accessibility.
@@ -142,54 +143,54 @@ function cannedCopy(pillar) {
       emoji: "🐾",
       earning: "$360/month",
       timeToFirst: "3-7 days",
-      hook: "3 dogs. $360 a month. Zero experience needed.",
+      hook: "3 dogs. $360 a month. A teen who shows up.",
       stat: "$360/mo",
-      body: "Dog walking pays $15-25 per walk. Lock in 3 weekly clients and you have a real business before next week.",
-      caption: "3 weekly dog walking clients = $360+ a month.\n\nNo experience. No startup cost. Just your neighborhood.\n\nHustleUp gives you the exact steps to find them, pitch them, and keep them.\n\nLink in bio 🐾",
-      hashtags: ["#hustleup", "#teenentrepreneur", "#sidehustle", "#teenmoney", "#dogwalking", "#petservices", "#makemoneyasateen"],
-      alt_text: "Dark background with orange accent showing pet services hustle earning $360 per month on HustleUp app.",
+      body: "Dog walking pays $15-25 per walk. With 3 weekly clients, your teen runs a real little business — and learns reliability no chore chart can teach.",
+      caption: "3 dog walking clients = $360+ a month for your teen.\n\nNo startup cost. Just your neighborhood and a plan.\n\nHustleUp walks them through finding clients, pitching, and keeping them.\n\nGive them a head start → hustleup.us 🐾",
+      hashtags: ["#hustleup", "#parentingteens", "#raisingteens", "#lifeskills", "#teenmoney", "#raisingentrepreneurs", "#momsofteens"],
+      alt_text: "Dark background with orange accent showing pet services hustle earning 360 dollars per month on HustleUp app.",
     },
     myth: {
-      myth: "You need to be 18 to make real money.",
-      fact: "Teens are already making hundreds per week.",
-      body: "Dog walking, tutoring, content creation, reselling — none of these require you to be 18. They require you to start.",
-      caption: "Nobody told us this at 16.\n\nYou don't need to be 18. You need a plan.\n\nHustleUp gives teens 8 real side hustle roadmaps with step-by-step guidance.\n\nhustleup.us",
-      hashtags: ["#hustleup", "#teenentrepreneur", "#sidehustle", "#teenmoney", "#makemoneyasateen", "#youngentrepreneur"],
-      alt_text: "Myth versus fact graphic on dark background: teens can make real money before age 18.",
+      myth: "My teen is too young to earn real money.",
+      fact: "Teens are already earning hundreds per week.",
+      body: "Dog walking, tutoring, reselling, content — teens are doing all of it today. They don't need to be 18. They need structure and a first step.",
+      caption: "It's not too early.\n\nTeens across the country are earning real money with simple hustles — and learning more than any allowance teaches.\n\nHustleUp gives your teen the structure to start safely.\n\nSee how it works → hustleup.us",
+      hashtags: ["#hustleup", "#parentingteens", "#raisingteens", "#moneyskills", "#financialliteracy", "#raisingentrepreneurs"],
+      alt_text: "Myth versus fact graphic on dark background: teens can earn real money before age 18.",
     },
     tip: {
-      eyebrow: "QUICK WIN",
-      headline: "Find your first dog walking client today.",
-      body: "Knock on 10 doors on your street. Say: 'Hi, I'm [name] from nearby. Dog walking from $15. Reliable and local.' Your first client is probably 3 houses away.",
-      caption: "Your first client is closer than you think.\n\nKnock on 10 doors on your own street. Introduce yourself. Give your rate.\n\nMost teens get their first booking within a week of actually trying.\n\nhustleup.us",
-      hashtags: ["#hustleup", "#sidehustle", "#teenmoney", "#teenentrepreneur", "#dogwalking", "#makemoneyasateen"],
-      alt_text: "Quick win tip graphic on dark background about finding your first dog walking client.",
+      eyebrow: "PARENT PLAYBOOK",
+      headline: "Turn 'I'm bored' into their first paying client.",
+      body: "Next time your teen says they're bored, offer a deal: walk 10 houses together, introduce them to neighbors with pets. Most teens land their first dog walking client within a week.",
+      caption: "'I'm bored' is an opening, not a complaint.\n\nWalk your street together. Ten doors. Most teens land a first client within a week.\n\nHustleUp gives them the exact script so you don't have to.\n\nStart them today → hustleup.us",
+      hashtags: ["#hustleup", "#parentingteens", "#parentinghacks", "#raisingteens", "#lifeskills", "#momsofteens"],
+      alt_text: "Parent playbook tip graphic on dark background about helping your teen find their first client.",
     },
     stat: {
       eyebrow: "DID YOU KNOW",
       stat: "54%",
       headline: "of teens say they want to start a business.",
-      body: "Most never do because nobody gives them real steps. HustleUp fixes that.",
-      caption: "More than half of teens want to be entrepreneurs.\n\nMost never start because nobody gives them a real roadmap.\n\nHustleUp changes that. 8 hustles. Step by step. AI coach included.\n\nhustleup.us",
-      hashtags: ["#hustleup", "#teenentrepreneur", "#sidehustle", "#teenmoney", "#youngentrepreneur", "#makemoneyasateen"],
-      alt_text: "Large orange statistic 54% on dark background about teens wanting to start businesses.",
+      body: "Most never do — not from lack of drive, but because nobody hands them real steps. That's the gap HustleUp fills.",
+      caption: "More than half of teens want to build something of their own.\n\nMost never start because nobody gives them a roadmap.\n\nHustleUp turns that ambition into a first client, step by step.\n\nGive them a head start → hustleup.us",
+      hashtags: ["#hustleup", "#parentingteens", "#raisingentrepreneurs", "#teenconfidence", "#futureready", "#momsofteens"],
+      alt_text: "Large orange statistic 54 percent on dark background about teens wanting to start businesses.",
     },
     feature: {
       eyebrow: "INSIDE HUSTLEUP",
       feature_name: "AI Coach",
-      headline: "Your personal coach for every hustle.",
-      body: "Every hustle has its own AI coach with a unique personality. Ask it anything — pricing, clients, first steps — and get real specific advice, not generic tips.",
-      caption: "Imagine having a personal coach for your exact side hustle.\n\nThat's what HustleUp's AI coach does. Specific, actionable, always available.\n\nContent creator? Design? Dog walking? There's a coach for that.\n\nhustleup.us 🤖",
-      hashtags: ["#hustleup", "#aicoach", "#teenentrepreneur", "#sidehustle", "#teenmoney", "#makemoneyonline"],
+      headline: "The mentor for questions teens won't ask you.",
+      body: "Every hustle has its own AI coach. Your teen asks about pricing, nerves, first clients — and gets specific, age-appropriate guidance any hour of the day.",
+      caption: "Teens don't always want advice from mom or dad. They still need it.\n\nHustleUp's AI coach answers the questions they won't ask you — pricing, clients, confidence.\n\nOne $19.99 payment. Lifetime access. No subscription.\n\nSee how it works → hustleup.us 🤖",
+      hashtags: ["#hustleup", "#parentingteens", "#aicoach", "#raisingteens", "#lifeskills", "#futureready"],
       alt_text: "HustleUp AI coach feature reveal on dark background with orange and purple accents.",
     },
     transformation: {
-      before: "Bored, broke, asking parents for money.",
-      after: "Earning $90 this weekend with 3 lawn clients.",
-      body: "The only difference is a roadmap. HustleUp gives you every step from zero to first dollar, then from first dollar to real income.",
-      caption: "This time last month you were bored.\n\nThis weekend you could be earning $90.\n\nHustleUp gives teens the exact roadmap to make it real.\n\nhustleup.us 🚀",
-      hashtags: ["#hustleup", "#teenentrepreneur", "#sidehustle", "#teenmoney", "#transformation", "#makemoneyasateen"],
-      alt_text: "Before and after transformation graphic on dark background showing teen going from broke to earning.",
+      before: "Scrolling all weekend, asking for money.",
+      after: "Earning $90 a weekend with 3 lawn clients.",
+      body: "Same kid. The difference is a roadmap. HustleUp turns 'I'm bored' into first clients, first earnings, and a teen who walks taller.",
+      caption: "Same kid. Different weekend.\n\nWhen a teen earns their first $90, something changes — and you'll see it in how they carry themselves.\n\nHustleUp gives them the roadmap from bored to booked.\n\nGive them a head start → hustleup.us 🚀",
+      hashtags: ["#hustleup", "#parentingteens", "#teenconfidence", "#raisingteens", "#lifeskills", "#parentingwin"],
+      alt_text: "Before and after transformation graphic on dark background showing a teen going from scrolling to earning.",
     },
   };
   return canned[pillar.template];

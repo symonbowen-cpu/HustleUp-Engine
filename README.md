@@ -1,29 +1,33 @@
 # HustleUp Content Engine
 
-Autonomous daily Instagram content for [hustleup.us](https://hustleup.us).
+Autonomous daily Instagram + Facebook content for [hustleup.us](https://hustleup.us).
 
-**How it works:** A GitHub Action runs daily → rotates through 7 content pillars → Claude writes copy in the HustleUp brand voice → Puppeteer renders a branded 1080x1080 card → post is either published straight to Instagram or sent to a GitHub issue for one-tap approval.
+**Audience: parents of teens.** Parents are the buyer — every post speaks to
+them (their teen is the subject). Facebook is where most parents are, so one
+approval publishes to both the Instagram account and the Facebook Page.
+
+**How it works:** A GitHub Action runs daily → rotates through 7 content pillars → Claude writes parent-focused copy in the HustleUp brand voice → Puppeteer renders a branded card (1080x1080 image, or a 12s animated reel on reel days) → the post is either published straight to both platforms or sent to a GitHub issue for one-tap approval.
 
 - Setup: see [SETUP.md](SETUP.md)
 - Content & voice: `content/themes.json`
-- Card designs: `templates/`
+- Card designs: `templates/` (static) and `templates/reels/` (animated)
 - Mode switch: repo variable `AUTO_PUBLISH` (`true` = fully autonomous)
 
 ```
-daily cron ─► generate.js ─► commit image ─► AUTO_PUBLISH?
-                                              ├─ true  ─► publish.js ─► Instagram
-                                              └─ false ─► GitHub issue ─► /approve ─► Instagram
+daily cron ─► generate.js ─► commit media ─► AUTO_PUBLISH?
+                                              ├─ true  ─► publish.js ─► Instagram + Facebook
+                                              └─ false ─► GitHub issue ─► /approve ─► Instagram + Facebook
 ```
 
-## Content Pillars (7 rotating)
+## Content Pillars (7 rotating, all parent-facing)
 
-1. **hustle_spotlight** — showcases one hustle with earning potential
-2. **myth_bust** — busts a common teen money myth
-3. **quick_win** — one actionable tip teens can use this week
-4. **stat** — a motivating statistic about teen entrepreneurship
-5. **parent_pitch** — speaks to parents about HustleUp's value
-6. **feature_reveal** — showcases an app feature
-7. **transformation** — before/after of using HustleUp
+1. **hustle_spotlight** — one hustle their teen could run: earnings, speed, skills
+2. **myth_bust** — busts a myth parents believe about teens and money
+3. **parent_win** — one concrete step to help their teen start this week
+4. **stat** — a statistic that reframes what their teen is capable of
+5. **confidence** — before/after: bored scroller → confident earner
+6. **feature_reveal** — why the app is safe, structured, and worth $19.99 once
+7. **gift_angle** — the smartest $19.99 vs games and subscriptions
 
 ## Commands
 

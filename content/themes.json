@@ -7,117 +7,117 @@
     "handle": "@hustleupapp",
     "url": "hustleup.us",
     "tagline": "Real steps. Real earnings. Real skills.",
-    "voice": "Energetic, direct, and motivating. Talking to teens 13-19 and their parents. Short punchy sentences. Never preachy. Always actionable. Use numbers and specifics. Make earning money feel achievable and fun.",
+    "voice": "Warm, credible, and encouraging — speaking parent to parent. The audience is parents of teens 13-19 who worry their kid spends too much time scrolling and wants them to build confidence, work ethic, and real-world skills. Empathetic to parenting frustrations without bashing teens. Practical and specific: real dollar amounts, real timelines, real skills. Position HustleUp ($19.99 one-time, lifetime access) as a small investment compared to what parents already spend on games and subscriptions. Never hype-y or get-rich-quick — this is about growth, initiative, and life skills, with earnings as the proof.",
     "price": "$19.99 lifetime",
-    "cta_options": ["Link in bio", "hustleup.us", "Start free → hustleup.us", "Take the quiz → hustleup.us"]
+    "cta_options": ["Give them a head start → hustleup.us", "hustleup.us", "See how it works → hustleup.us", "Start them today → hustleup.us"]
   },
   "pillars": [
     {
       "id": "hustle_spotlight",
       "template": "spotlight",
-      "goal": "Spotlight one specific hustle from HustleUp and show exactly how much a teen can earn and how fast they can start.",
+      "goal": "Show parents one specific hustle their teen could do through HustleUp — what they'd earn, how fast they'd start, and what skills they'd build along the way.",
       "topics": [
-        "Content Creator: how teens make $100-$5K/mo posting short videos",
-        "Pet Services: how teens make $360/month walking dogs in their neighborhood",
-        "Reseller: how teens flip $20 into $200 at thrift stores",
-        "Tutor: how teens charge $20-$50/hr teaching subjects they already know",
-        "Freelance Designer: how teens make $25-$75 per logo using Canva",
-        "Lawn & Yard: how teens make $90/week with 3 regular lawn clients",
-        "Social Media Manager: how teens charge $200-$800/month per client",
-        "Freelance Writer: how teens get paid $10-$100 per article"
+        "Pet Services: your teen earning $360/month walking dogs — and learning reliability",
+        "Tutoring: your teen earning $20-$50/hr with knowledge they already have",
+        "Content Creator: how structured guidance turns screen time into $100-$5K/mo skills",
+        "Reselling: your teen turning $20 into $200 — and learning how business actually works",
+        "Lawn & Yard: $90/week from 3 clients, plus the habit of showing up",
+        "Freelance Design: $25-$75 per logo using tools your teen already knows",
+        "Social Media Manager: local businesses pay teens $200-$800/month — real client skills",
+        "Freelance Writing: $10-$100 per article and a portfolio before college"
       ]
     },
     {
       "id": "myth_bust",
       "template": "myth",
-      "goal": "Bust one common myth teens or parents believe about teen entrepreneurship or making money.",
+      "goal": "Bust a myth parents believe about teens and money — the doubts that stop them from encouraging their teen to start.",
       "topics": [
-        "Myth: You need to be 18 to make real money",
-        "Myth: You need money to make money",
-        "Myth: Social media is just for fun, not income",
-        "Myth: You need special skills to freelance",
-        "Myth: Only lucky teens go viral and make money",
-        "Myth: You need a job to build work experience",
-        "Myth: Making money online is a scam",
-        "Myth: You need thousands of followers to earn from content"
+        "Myth: My teen is too young to earn real money",
+        "Myth: Making money online is all scams and gambling",
+        "Myth: A part-time job teaches more than a side hustle",
+        "Myth: My teen needs to focus only on school",
+        "Myth: Social media is just rotting their brain",
+        "Myth: Entrepreneurship is too risky for a teenager",
+        "Myth: My teen isn't the entrepreneurial type",
+        "Myth: They'll learn about money when they're older"
       ]
     },
     {
-      "id": "quick_win",
+      "id": "parent_win",
       "template": "tip",
-      "goal": "Give one specific actionable step any teen can take this week to start earning money. Pure value, soft CTA at end.",
+      "goal": "Give parents one concrete, doable step to help their teen start earning this week — pure value, soft CTA at the end.",
       "topics": [
-        "How to find your first dog walking client in 3 days",
-        "The exact message to send when pitching a local business",
-        "How to price your first freelance design job",
-        "The fastest way to get your first tutoring student",
-        "How to take product photos that actually sell on Depop",
-        "The one thing every teen content creator should do before posting",
-        "How to door-knock for lawn care clients without feeling awkward",
-        "The 5-question quiz that finds your perfect side hustle"
+        "The 10-minute conversation that gets your teen off the couch",
+        "How to help your teen land their first dog walking client this week",
+        "What to say when your teen says 'I'm bored' (script included)",
+        "How to turn your teen's screen time into skill-building time",
+        "The one question that reveals your teen's natural hustle",
+        "How to encourage without nagging: the deal that works",
+        "Why matching their first $20 of earnings changes everything",
+        "How to help your teen price their first paid gig"
       ]
     },
     {
       "id": "stat",
       "template": "stat",
-      "goal": "Share one real, motivating statistic about teen entrepreneurship, youth income, or the gig economy that makes a teen think differently.",
+      "goal": "Share one real statistic that makes a parent rethink what their teen is capable of — youth earning, confidence, screen time, or life-skill outcomes.",
       "topics": [
-        "How many teens are already making money through side hustles",
-        "Average hourly rate teens charge for tutoring vs minimum wage",
-        "How much a dog walker with 5 weekly clients earns per month",
-        "Percentage of small businesses with weak or no social media presence",
-        "How fast content creators can earn their first $100",
-        "What percentage of teens say they want to be entrepreneurs"
+        "What percentage of teens say they want to start a business",
+        "Average teen tutoring rate vs minimum wage — why hustles beat first jobs",
+        "How many hours a week the average teen spends scrolling",
+        "What a teen dog walker with 5 weekly clients earns per month",
+        "Percentage of parents who say their teen lacks money skills",
+        "How early money experience correlates with adult financial confidence"
       ]
     },
     {
-      "id": "parent_pitch",
-      "template": "tip",
-      "goal": "Speak directly to parents about why HustleUp teaches real skills, builds confidence, and is a safe educational tool for their teen.",
+      "id": "confidence",
+      "template": "transformation",
+      "goal": "Show parents the before/after transformation — from a bored, scrolling teen to a confident kid earning their own money and walking taller.",
       "topics": [
-        "Why a side hustle teaches teens more than any summer job",
-        "How earning their own money changes a teen's confidence",
-        "Why teens who learn to sell have a lifelong advantage",
-        "What parents should know about AI coaching for teens",
-        "Why structured roadmaps beat vague 'just start' advice for teens",
-        "How HustleUp keeps teen content safe and age-appropriate"
+        "From 'I'm bored' to their first $90 weekend",
+        "From asking for money to offering to pay their own way",
+        "From endless scrolling to building something they're proud of",
+        "From 'I don't know what I'm good at' to first paying client",
+        "From no work experience to a story every college essay needs",
+        "From gaming all summer to running a real weekend business"
       ]
     },
     {
       "id": "feature_reveal",
       "template": "feature",
-      "goal": "Showcase one specific feature of the HustleUp app in a way that makes teens want to try it immediately.",
+      "goal": "Show parents one HustleUp feature and why it makes the app safe, structured, and worth $19.99 once — less than most games they've already bought.",
       "topics": [
-        "The AI coach that gives specific advice for your exact hustle",
-        "The XP and leveling system that makes earning feel like a game",
-        "The step-by-step roadmap that tells you exactly what to do next",
-        "The earnings tracker that shows your real weekly progress",
-        "The leaderboard that shows how you rank against other hustlers",
-        "The hustle quiz that finds your perfect match in 5 questions",
-        "Daily challenges that build the consistency habit",
-        "Badges and achievements that celebrate every milestone"
+        "The AI coach that answers the questions teens won't ask you",
+        "Step-by-step roadmaps so your teen always knows what to do next",
+        "The earnings tracker that shows you real progress, not promises",
+        "XP and levels that make effort feel like their favorite game",
+        "The 5-question quiz that matches your teen to the right hustle",
+        "Daily challenges that quietly build the consistency habit",
+        "Age-appropriate content designed for teens 13-19",
+        "One $19.99 payment, lifetime access — no subscription, no upsells"
       ]
     },
     {
-      "id": "transformation",
-      "template": "transformation",
-      "goal": "Show the before/after transformation HustleUp creates — from bored/broke teen to confident earner.",
+      "id": "gift_angle",
+      "template": "tip",
+      "goal": "Frame HustleUp as the smartest $19.99 a parent can spend — compare it to what they already spend on games, subscriptions, and allowance, and to what it returns in skills and confidence.",
       "topics": [
-        "From 'I'm bored' to earning $90 this weekend",
-        "From zero followers to first brand deal in 60 days",
-        "From asking parents for money to paying for your own stuff",
-        "From 'I don't know what to do' to step 1 done today",
-        "From scrolling TikTok to making money on TikTok",
-        "From no experience to first paying client this week"
+        "$19.99 once vs $70 for a video game they'll forget by summer",
+        "The birthday gift that pays your teen back",
+        "Cheaper than one month of their subscriptions — teaches skills for life",
+        "Why allowance teaches spending but a hustle teaches earning",
+        "The graduation gift no one else will think of",
+        "What $19.99 buys: 8 hustle roadmaps, an AI coach, and a teen with a plan"
       ]
     }
   ],
   "hashtag_bank": [
-    "#hustleup", "#teenentrepreneur", "#sidehustle", "#teenmoney",
-    "#makemoneyasateen", "#youngentrepreneur", "#sidehustleideas",
-    "#teensidehustle", "#makemoneyonline", "#entrepreneurlife",
-    "#hustle", "#levelup", "#earnmoney", "#teentok", "#moneytok",
-    "#sidehustleideas2026", "#contentcreatortips", "#passiveincome",
-    "#hustlehard", "#raisingentrepreneurs", "#parentingteens"
+    "#parentingteens", "#raisingteens", "#teenparenting", "#momsofteens",
+    "#dadsofteens", "#parentinghacks", "#raisingentrepreneurs", "#teenentrepreneur",
+    "#lifeskills", "#moneyskills", "#financialliteracy", "#confidentkids",
+    "#teenconfidence", "#sidehustle", "#teenmoney", "#parentingwin",
+    "#screentime", "#motivatedteens", "#futureready", "#parentsofinstagram",
+    "#hustleup"
   ]
 }

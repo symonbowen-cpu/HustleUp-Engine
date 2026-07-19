@@ -56,6 +56,8 @@ jobs:
         env:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
           IG_GRAPH_HOST: ${{ vars.IG_GRAPH_HOST || 'graph.facebook.com' }}
           GITHUB_SHA: ${{ steps.sha.outputs.sha }}
         run: npm run publish:ig
@@ -113,10 +115,12 @@ jobs:
             const match = body.match(/\/([a-f0-9]{40})\/out/);
             return match ? match[1] : 'main';
 
-      - name: Publish to Instagram
+      - name: Publish to Instagram + Facebook
         env:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
           IG_GRAPH_HOST: ${{ vars.IG_GRAPH_HOST || 'graph.facebook.com' }}
           GITHUB_SHA: ${{ steps.get_sha.outputs.result }}
         run: npm run publish:ig
@@ -129,7 +133,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.payload.issue.number,
-              body: '✅ Published to Instagram!'
+              body: '✅ Published to Instagram + Facebook!'
             });
             await github.rest.issues.update({
               owner: context.repo.owner,

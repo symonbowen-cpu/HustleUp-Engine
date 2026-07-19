@@ -39,6 +39,24 @@ One-time setup: about 30–45 minutes. After that, the engine runs itself every 
    - `pages_read_engagement`
 9. Copy the token — this is your **IG_ACCESS_TOKEN**
 
+#### Facebook Page publishing (hit parents on Facebook too)
+
+The engine also posts to your Facebook Page on the same approval. Since most
+parents live on Facebook rather than Instagram, this is where the buyer is.
+
+1. When generating the system-user token above, ALSO check:
+   - `pages_manage_posts`
+   - `business_management`
+2. You can reuse that same token as **FB_PAGE_ACCESS_TOKEN** (it has both the
+   Instagram and Page permissions), or generate a second token with just the
+   page scopes.
+3. Your **FB_PAGE_ID** is the Page "id" from `GET me/accounts` (same call
+   used below for the Instagram ID).
+
+If `FB_PAGE_ID` / `FB_PAGE_ACCESS_TOKEN` are not set, Facebook is skipped and
+Instagram publishing works exactly as before (and vice versa) — each platform
+publishes independently, so one failing doesn't block the other.
+
 #### Get your Instagram User ID
 In Graph API Explorer (developers.facebook.com/tools/explorer):
 ```
@@ -73,6 +91,8 @@ Repo → **Settings → Secrets and variables → Actions → Secrets**:
 | `ANTHROPIC_API_KEY` | From console.anthropic.com |
 | `IG_USER_ID` | From Part 1 |
 | `IG_ACCESS_TOKEN` | From Part 1 |
+| `FB_PAGE_ID` | From Part 1 (Facebook Page publishing) |
+| `FB_PAGE_ACCESS_TOKEN` | From Part 1 (can be the same token as IG_ACCESS_TOKEN if it has `pages_manage_posts`) |
 
 ### 3. Set mode variable
 Repo → **Settings → Secrets and variables → Actions → Variables**:

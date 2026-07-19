@@ -4,12 +4,18 @@
  * because Instagram fetches the image from a public raw.githubusercontent.com URL.
  *
  * Env:
- *   IG_USER_ID        — Instagram Business Account ID (numeric)
- *   IG_ACCESS_TOKEN   — long-lived / system-user token with instagram_content_publish
- *   GITHUB_REPOSITORY — owner/repo (set automatically in Actions)
- *   GITHUB_SHA        — commit sha of the pushed image (set in workflow after push)
- *   IMAGE_PUBLIC_URL  — optional override URL
- *   IG_GRAPH_HOST     — graph.instagram.com (Route A) or graph.facebook.com (Route B, default)
+ *   IG_USER_ID           — Instagram Business Account ID (numeric)
+ *   IG_ACCESS_TOKEN      — long-lived / system-user token with instagram_content_publish
+ *   FB_PAGE_ID           — Facebook Page ID (numeric)
+ *   FB_PAGE_ACCESS_TOKEN — Page access token with pages_manage_posts
+ *   GITHUB_REPOSITORY    — owner/repo (set automatically in Actions)
+ *   GITHUB_SHA           — commit sha of the pushed media (set in workflow after push)
+ *   IMAGE_PUBLIC_URL     — optional override URL (static posts)
+ *   VIDEO_PUBLIC_URL     — optional override URL (reels)
+ *   IG_GRAPH_HOST        — graph.instagram.com (Route A) or graph.facebook.com (Route B, default)
+ *
+ * Publishes to every platform whose credentials are present (one approval,
+ * all angles). A platform with missing secrets is skipped with a log line.
  */
 
 const fs = require("fs");
@@ -52,24 +58,9 @@ async function waitForContainer(containerId, token, timeoutMs = 5 * 60 * 1000) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-(async () => {
+// ── Instagram ──
+async function publishInstagram(post, mediaUrl, isReel) {
   const { IG_USER_ID, IG_ACCESS_TOKEN } = process.env;
-  if (!IG_USER_ID || !IG_ACCESS_TOKEN) {
-    throw new Error("Missing IG_USER_ID or IG_ACCESS_TOKEN");
-  }
-
-  const postPath = path.join(PENDING, "post.json");
-  if (!fs.existsSync(postPath)) throw new Error("No pending post found in out/pending/");
-  const post = loadJSON(postPath);
-
-  const isReel = post.format === "reel";
-  const mediaFile = isReel ? "post.mp4" : "post.png";
-  const mediaUrl =
-    (isReel ? process.env.VIDEO_PUBLIC_URL : process.env.IMAGE_PUBLIC_URL) ||
-    `https://raw.githubusercontent.com/${process.env.GITHUB_REPOSITORY}/${process.env.GITHUB_SHA || "main"}/out/pending/${mediaFile}`;
-
-  console.log(`${isReel ? "🎬 Video" : "📸 Image"} URL: ${mediaUrl}`);
-  console.log(`📝 Caption preview: ${post.caption.slice(0, 80)}...`);
 
   // 1. create media container
   const container = await graph(`${IG_USER_ID}/media`, isReel
@@ -85,7 +76,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
         caption: post.caption,
         access_token: IG_ACCESS_TOKEN,
       });
-  console.log(`✅ Container created: ${container.id}`);
+  console.log(`  IG container created: ${container.id}`);
 
   // 2. wait for Instagram to process the media
   if (isReel) {
@@ -95,23 +86,95 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   }
 
   // 3. publish with retries
-  let published;
   for (let attempt = 1; attempt <= 4; attempt++) {
     try {
-      published = await graph(`${IG_USER_ID}/media_publish`, {
+      const published = await graph(`${IG_USER_ID}/media_publish`, {
         creation_id: container.id,
         access_token: IG_ACCESS_TOKEN,
       });
-      break;
+      return published.id;
     } catch (e) {
       if (attempt === 4) throw e;
-      console.log(`Attempt ${attempt} not ready, retrying in 10s...`);
+      console.log(`  IG attempt ${attempt} not ready, retrying in 10s...`);
       await sleep(10000);
     }
   }
-  console.log(`🚀 Published! Media ID: ${published.id}`);
+}
 
-  // 4. archive
+// ── Facebook Page ──
+async function publishFacebook(post, mediaUrl, isReel) {
+  const { FB_PAGE_ID, FB_PAGE_ACCESS_TOKEN } = process.env;
+  if (isReel) {
+    // post the video to the Page (Facebook processes it async after the call)
+    const res = await graph(`${FB_PAGE_ID}/videos`, {
+      file_url: mediaUrl,
+      description: post.caption,
+      access_token: FB_PAGE_ACCESS_TOKEN,
+    });
+    return res.id;
+  }
+  const res = await graph(`${FB_PAGE_ID}/photos`, {
+    url: mediaUrl,
+    message: post.caption,
+    access_token: FB_PAGE_ACCESS_TOKEN,
+  });
+  return res.post_id || res.id;
+}
+
+(async () => {
+  const hasIG = !!(process.env.IG_USER_ID && process.env.IG_ACCESS_TOKEN);
+  const hasFB = !!(process.env.FB_PAGE_ID && process.env.FB_PAGE_ACCESS_TOKEN);
+  if (!hasIG && !hasFB) {
+    throw new Error("No platform credentials: set IG_USER_ID/IG_ACCESS_TOKEN and/or FB_PAGE_ID/FB_PAGE_ACCESS_TOKEN");
+  }
+
+  const postPath = path.join(PENDING, "post.json");
+  if (!fs.existsSync(postPath)) throw new Error("No pending post found in out/pending/");
+  const post = loadJSON(postPath);
+
+  const isReel = post.format === "reel";
+  const mediaFile = isReel ? "post.mp4" : "post.png";
+  const mediaUrl =
+    (isReel ? process.env.VIDEO_PUBLIC_URL : process.env.IMAGE_PUBLIC_URL) ||
+    `https://raw.githubusercontent.com/${process.env.GITHUB_REPOSITORY}/${process.env.GITHUB_SHA || "main"}/out/pending/${mediaFile}`;
+
+  console.log(`${isReel ? "🎬 Video" : "📸 Image"} URL: ${mediaUrl}`);
+  console.log(`📝 Caption preview: ${post.caption.slice(0, 80)}...`);
+
+  const results = {};
+  const failures = [];
+
+  if (hasIG) {
+    try {
+      console.log("📱 Publishing to Instagram...");
+      results.instagram = await publishInstagram(post, mediaUrl, isReel);
+      console.log(`✅ Instagram published: ${results.instagram}`);
+    } catch (e) {
+      failures.push(`Instagram: ${e.message}`);
+      console.error(`❌ Instagram failed: ${e.message}`);
+    }
+  } else {
+    console.log("⏭️ Instagram skipped (no IG_USER_ID/IG_ACCESS_TOKEN)");
+  }
+
+  if (hasFB) {
+    try {
+      console.log("📘 Publishing to Facebook Page...");
+      results.facebook = await publishFacebook(post, mediaUrl, isReel);
+      console.log(`✅ Facebook published: ${results.facebook}`);
+    } catch (e) {
+      failures.push(`Facebook: ${e.message}`);
+      console.error(`❌ Facebook failed: ${e.message}`);
+    }
+  } else {
+    console.log("⏭️ Facebook skipped (no FB_PAGE_ID/FB_PAGE_ACCESS_TOKEN)");
+  }
+
+  if (Object.keys(results).length === 0) {
+    throw new Error(`All platforms failed:\n${failures.join("\n")}`);
+  }
+
+  // archive (runs when at least one platform succeeded)
   const stamp = new Date().toISOString().slice(0, 10);
   fs.mkdirSync(PUBLISHED, { recursive: true });
   const ext = isReel ? "mp4" : "png";
@@ -121,11 +184,15 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     if (fs.existsSync(p)) fs.unlinkSync(p);
   }
   post.publishedAt = new Date().toISOString();
-  post.mediaId = published.id;
+  post.published = results;
+  if (failures.length) post.publishFailures = failures;
   saveJSON(path.join(PUBLISHED, `${stamp}.json`), post);
   fs.unlinkSync(postPath);
 
   console.log(`📁 Archived to out/published/${stamp}.*`);
+  if (failures.length) {
+    console.log(`⚠️ Partial publish — failed: ${failures.join("; ")}`);
+  }
 })().catch((e) => {
   console.error(e);
   process.exit(1);
