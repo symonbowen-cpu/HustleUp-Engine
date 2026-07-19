@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<style>
+@font-face { font-family:'Boogaloo'; src:url('data:font/woff2;base64,{{font_display}}') format('woff2'); font-weight:400; }
+@font-face { font-family:'Outfit';   src:url('data:font/woff2;base64,{{font_body}}') format('woff2'); font-weight:400; }
+@font-face { font-family:'Outfit';   src:url('data:font/woff2;base64,{{font_body_semibold}}') format('woff2'); font-weight:600; }
+@font-face { font-family:'Outfit';   src:url('data:font/woff2;base64,{{font_body_bold}}') format('woff2'); font-weight:800; }
+
+:root {
+  --bg:#07070E; --bg2:#0D0D1A; --bg3:#12121F;
+  --orange:#FF6B35; --orange2:#FF3366; --purple:#7C3AED; --purple2:#4F46E5;
+  --green:#10B981; --gold:#FFD700; --white:#FFFFFF;
+  --white60:rgba(255,255,255,0.6); --white40:rgba(255,255,255,0.4);
+  --white20:rgba(255,255,255,0.2); --white08:rgba(255,255,255,0.08);
+}
+
+* { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  width:1080px; height:1920px;
+  background:var(--bg);
+  font-family:'Outfit',sans-serif;
+  color:var(--white);
+  overflow:hidden; position:relative;
+}
+
+.card { width:1080px; height:1920px; position:relative; overflow:hidden; }
+
+/* ambient glows — slow infinite drift */
+.glow-tl, .glow-br {
+  position:absolute; width:900px; height:900px; border-radius:50%;
+  filter:blur(90px); opacity:0.55; z-index:1;
+}
+.glow-tl { top:-350px; left:-300px; background:radial-gradient(circle, rgba(124,58,237,0.45), transparent 65%);
+  animation: drift 9s ease-in-out infinite alternate; }
+.glow-br { bottom:-350px; right:-300px; background:radial-gradient(circle, rgba(255,107,53,0.35), transparent 65%);
+  animation: drift 9s ease-in-out infinite alternate-reverse; }
+@keyframes drift { from { transform:translate(0,0) scale(1); } to { transform:translate(70px,50px) scale(1.12); } }
+
+.content {
+  position:relative; z-index:5;
+  padding:150px 90px 260px;
+  height:100%;
+  display:flex; flex-direction:column; justify-content:center;
+}
+
+.footer {
+  position:absolute; bottom:0; left:0; right:0; height:150px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 70px; z-index:10;
+  background:linear-gradient(transparent, rgba(7,7,14,0.9) 40%);
+}
+.footer-handle { font-family:'Boogaloo',cursive; font-size:34px; color:var(--white40); letter-spacing:1px; }
+.footer-url    { font-family:'Boogaloo',cursive; font-size:34px; color:var(--orange); letter-spacing:1px; }
+.footer-logo   { font-family:'Boogaloo',cursive; font-size:38px; color:var(--white); letter-spacing:2px; }
+
+.grad-text {
+  background:linear-gradient(135deg,#fff 0%,#FF6B35 50%,#7C3AED 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.tag {
+  display:inline-block; background:rgba(255,107,53,0.15);
+  border:2px solid rgba(255,107,53,0.35); border-radius:100px;
+  padding:12px 34px; font-family:'Boogaloo',cursive; font-size:30px;
+  color:var(--orange); letter-spacing:3px;
+}
+
+/* ── animation system ──
+   Elements declare: class="anim" data-fx="<effect>" data-at="<ms>" [data-dur="<ms>"]
+   [data-sfx="<name>"] [data-countup="1"]                                     */
+.anim { animation-fill-mode:both !important; animation-timing-function:cubic-bezier(0.22,1,0.36,1); }
+
+@keyframes fx-slide-up    { from { opacity:0; transform:translateY(90px); }  to { opacity:1; transform:translateY(0); } }
+@keyframes fx-slide-down  { from { opacity:0; transform:translateY(-70px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fx-slide-left  { from { opacity:0; transform:translateX(120px); } to { opacity:1; transform:translateX(0); } }
+@keyframes fx-slide-right { from { opacity:0; transform:translateX(-120px);} to { opacity:1; transform:translateX(0); } }
+@keyframes fx-pop         { 0% { opacity:0; transform:scale(0.35); } 70% { opacity:1; transform:scale(1.07); } 100% { opacity:1; transform:scale(1); } }
+@keyframes fx-fade        { from { opacity:0; } to { opacity:1; } }
+@keyframes fx-punch       { 0% { opacity:0; transform:scale(2.2); } 60% { opacity:1; transform:scale(0.94); } 100% { opacity:1; transform:scale(1); } }
+@keyframes fx-wipe        { from { clip-path:inset(0 100% 0 0); opacity:1; } to { clip-path:inset(0 0 0 0); opacity:1; } }
+@keyframes fx-pulse       { 0%,100% { transform:scale(1); } 50% { transform:scale(1.045); } }
+@keyframes fx-float       { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-14px); } }
+</style>
+</head>
+<body>
+{{__base}}
+<script>
+(() => {
+  // wire declarative animations
+  document.querySelectorAll('.anim').forEach((el) => {
+    const fx  = el.dataset.fx || 'fade';
+    const at  = parseInt(el.dataset.at || '0', 10);
+    const dur = parseInt(el.dataset.dur || '650', 10);
+    const inf = (fx === 'pulse' || fx === 'float');
+    el.style.animationName = 'fx-' + fx;
+    el.style.animationDuration = dur + 'ms';
+    el.style.animationDelay = at + 'ms';
+    if (inf) el.style.animationIterationCount = 'infinite';
+  });
+
+  // count-up support: <span data-countup data-at data-dur>$360/mo</span>
+  const counters = [...document.querySelectorAll('[data-countup]')].map((el) => ({
+    el, final: el.textContent,
+    at: parseInt(el.dataset.at || '0', 10),
+    dur: parseInt(el.dataset.dur || '900', 10),
+  }));
+  const ease = (x) => 1 - Math.pow(1 - x, 3);
+
+  // deterministic seek for frame capture
+  window.__seek = (t) => {
+    document.getAnimations().forEach((a) => { a.pause(); a.currentTime = t; });
+    counters.forEach((c) => {
+      const p = Math.max(0, Math.min(1, (t - c.at) / c.dur));
+      c.el.textContent = c.final.replace(/\d[\d,]*/g, (m) => {
+        const n = parseInt(m.replace(/,/g, ''), 10);
+        const v = Math.round(n * ease(p));
+        return m.includes(',') ? v.toLocaleString('en-US') : String(v);
+      });
+    });
+  };
+
+  // timeline metadata for the renderer (duration + sfx events)
+  window.__timeline = () => ({
+    duration: parseInt((document.querySelector('[data-duration]') || { dataset: {} }).dataset.duration || '12000', 10),
+    sfx: [...document.querySelectorAll('[data-sfx]')].map((el) => ({
+      t: parseInt(el.dataset.at || '0', 10),
+      s: el.dataset.sfx,
+    })),
+  });
+})();
+</script>
+</body>
+</html>

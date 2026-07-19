@@ -1,0 +1,41 @@
+<div class="card" data-duration="12000">
+  <div class="glow-tl"></div>
+  <div class="glow-br"></div>
+
+  <div class="content" style="align-items:center; text-align:center;">
+    <!-- Eyebrow -->
+    <div class="anim" data-fx="slide-down" data-at="400" data-sfx="whoosh-up"
+         style="font-family:'Boogaloo',cursive; font-size:34px; letter-spacing:5px; color:var(--white40); margin-bottom:70px;">
+      {{eyebrow}}
+    </div>
+
+    <!-- Big stat, counts up -->
+    <div class="anim" data-fx="punch" data-at="1300" data-dur="800" data-sfx="ding">
+      <div data-countup data-at="1300" data-dur="1400"
+           style="font-family:'Boogaloo',cursive; font-size:280px; line-height:1; background:linear-gradient(135deg,#FF6B35,#FFD700); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:40px;">{{stat}}</div>
+    </div>
+
+    <!-- Headline -->
+    <div class="anim" data-fx="slide-up" data-at="3400" data-sfx="whoosh-up"
+         style="font-family:'Boogaloo',cursive; font-size:68px; color:#fff; line-height:1.2; max-width:860px; margin-bottom:56px;">{{headline}}</div>
+
+    <!-- Divider -->
+    <div class="anim" data-fx="wipe" data-at="4800" data-dur="600"
+         style="width:120px; height:6px; background:linear-gradient(90deg,var(--orange),var(--purple)); border-radius:3px; margin-bottom:56px;"></div>
+
+    <!-- Body -->
+    <div class="anim" data-fx="fade" data-at="5600" data-dur="900" data-sfx="pop"
+         style="font-size:38px; color:var(--white60); line-height:1.65; max-width:860px;">{{body}}</div>
+
+    <!-- CTA -->
+    <div class="anim" data-fx="pop" data-at="8800" data-sfx="riser" style="margin-top:80px;">
+      <div class="anim tag" data-fx="pulse" data-at="9600" data-dur="1600" style="font-size:36px; padding:18px 46px;">YOUR TURN → {{url}}</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-handle">{{handle}}</div>
+    <div class="footer-logo">🚀 HustleUp</div>
+    <div class="footer-url">{{url}}</div>
+  </div>
+</div>

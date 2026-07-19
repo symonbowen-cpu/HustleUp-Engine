@@ -11,8 +11,19 @@ const fs = require("fs");
 const path = require("path");
 const puppeteer = require("puppeteer");
 const { PENDING, themes, state, saveState, saveJSON, buildHTML } = require("./lib");
+const { renderReel } = require("./reel");
 
 const MODEL = process.env.CLAUDE_MODEL || "claude-sonnet-4-6";
+
+// ── format decision: reel days vs static days ──
+// Config: themes.json "reels": { "days": [1,3,5] }  (0=Sun ... 6=Sat, LA time)
+// Override with FORMAT=reel|static for testing.
+function decideFormat(cfg) {
+  if (process.env.FORMAT === "reel" || process.env.FORMAT === "static") return process.env.FORMAT;
+  const reelDays = cfg.reels?.days ?? [1, 3, 5]; // Mon/Wed/Fri
+  const laDay = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" })).getDay();
+  return reelDays.includes(laDay) ? "reel" : "static";
+}
 
 // ── pillar rotation ──
 function pickTopic(cfg, st) {
@@ -206,8 +217,9 @@ async function renderPNG(templateName, data, outPath) {
   const cfg = themes();
   const st = state();
   const { pillar, topic, tIdx } = pickTopic(cfg, st);
+  const format = decideFormat(cfg);
 
-  console.log(`Pillar: ${pillar.id} | Topic: ${topic}`);
+  console.log(`Pillar: ${pillar.id} | Topic: ${topic} | Format: ${format}`);
   const copy = await writeCopy(cfg, pillar, topic);
 
   // inject brand fields
@@ -215,9 +227,19 @@ async function renderPNG(templateName, data, outPath) {
   copy.url = cfg.brand.url;
   copy.tagline = cfg.brand.tagline;
 
+  // clean pending dir so a reel never ships alongside a stale image (or vice versa)
+  fs.rmSync(PENDING, { recursive: true, force: true });
   fs.mkdirSync(PENDING, { recursive: true });
-  const imgPath = path.join(PENDING, "post.png");
-  await renderPNG(pillar.template, copy, imgPath);
+
+  let media = {};
+  if (format === "reel") {
+    const reel = await renderReel(pillar.template, copy, PENDING, st.postCount);
+    media = { video: "post.mp4", preview: "preview.gif", durationSec: reel.durationSec, music: reel.music };
+  } else {
+    const imgPath = path.join(PENDING, "post.png");
+    await renderPNG(pillar.template, copy, imgPath);
+    media = { image: "post.png" };
+  }
 
   const caption =
     `${copy.caption}\n\n` +
@@ -225,11 +247,13 @@ async function renderPNG(templateName, data, outPath) {
 
   saveJSON(path.join(PENDING, "post.json"), {
     createdAt: new Date().toISOString(),
+    format,
     pillar: pillar.id,
     template: pillar.template,
     topic,
     caption,
     alt_text: copy.alt_text || "",
+    media,
     copy,
   });
 
@@ -240,7 +264,7 @@ async function renderPNG(templateName, data, outPath) {
   st.lastPosted = new Date().toISOString();
   saveState(st);
 
-  console.log(`✅ Generated ${imgPath}`);
+  console.log(`✅ Generated ${format === "reel" ? path.join(PENDING, "post.mp4") : path.join(PENDING, "post.png")}`);
   console.log(`Caption preview:\n${caption.slice(0, 120)}...`);
 })().catch((e) => {
   console.error(e);

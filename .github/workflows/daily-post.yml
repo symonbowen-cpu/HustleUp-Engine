@@ -41,7 +41,7 @@ jobs:
         run: |
           git config user.name "HustleUp Bot"
           git config user.email "bot@hustleup.us"
-          git add out/pending/ content/state.json
+          git add -A out/pending/ content/state.json
           git diff --staged --quiet || git commit -m "chore: daily post $(date -u +%Y-%m-%d)"
           git push
         env:
@@ -68,13 +68,18 @@ jobs:
             const fs = require('fs');
             const post = JSON.parse(fs.readFileSync('out/pending/post.json', 'utf8'));
             const sha = '${{ steps.sha.outputs.sha }}';
-            const imageUrl = `https://raw.githubusercontent.com/${context.repo.owner}/${context.repo.repo}/${sha}/out/pending/post.png`;
+            const raw = `https://raw.githubusercontent.com/${context.repo.owner}/${context.repo.repo}/${sha}/out/pending`;
+
+            const isReel = post.format === 'reel';
+            const preview = isReel
+              ? `![Reel Preview](${raw}/preview.gif)\n\n🎬 **[▶ Watch the full reel with sound](${raw}/post.mp4)** (${post.media.durationSec}s, track: ${post.media.music})`
+              : `![Post Preview](${raw}/post.png)`;
 
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `📸 Daily Post — ${new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'})}`,
-              body: `## Today's HustleUp Post\n\n**Pillar:** ${post.pillar}\n**Topic:** ${post.topic}\n\n![Post Preview](${imageUrl})\n\n**Caption:**\n\`\`\`\n${post.caption}\n\`\`\`\n\n---\n\nComment \`/approve\` to publish to Instagram.\nComment \`/skip\` to discard this post.`,
+              title: `${isReel ? '🎬 Daily Reel' : '📸 Daily Post'} — ${new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'})}`,
+              body: `## Today's HustleUp ${isReel ? 'Reel' : 'Post'}\n\n**Pillar:** ${post.pillar}\n**Topic:** ${post.topic}\n\n${preview}\n\n**Caption:**\n\`\`\`\n${post.caption}\n\`\`\`\n\n---\n\nComment \`/approve\` to publish to Instagram.\nComment \`/skip\` to discard this post.`,
               labels: ['content-approval']
             });
 

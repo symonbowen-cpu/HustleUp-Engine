@@ -6,6 +6,9 @@
   "scripts": {
     "generate": "node src/generate.js",
     "generate:dry": "DRY_RUN=1 node src/generate.js",
+    "generate:reel": "FORMAT=reel node src/generate.js",
+    "generate:reel:dry": "DRY_RUN=1 FORMAT=reel node src/generate.js",
+    "make:audio": "node tools/make-audio.js",
     "publish:ig": "node src/publish.js"
   },
   "dependencies": {

@@ -1,0 +1,36 @@
+<div class="card" data-duration="12000">
+  <div class="glow-tl"></div>
+  <div class="glow-br"></div>
+
+  <div class="content">
+    <!-- Eyebrow tag -->
+    <div class="anim" data-fx="pop" data-at="400" data-sfx="pop" style="margin-bottom:56px;">
+      <span class="tag" style="font-size:32px;">⚡ {{eyebrow}}</span>
+    </div>
+
+    <!-- Headline -->
+    <div class="anim grad-text" data-fx="slide-up" data-at="1200" data-dur="800" data-sfx="whoosh-up"
+         style="font-family:'Boogaloo',cursive; font-size:96px; line-height:1.12; margin-bottom:64px;">
+      {{headline}}
+    </div>
+
+    <!-- Divider -->
+    <div class="anim" data-fx="wipe" data-at="2800" data-dur="600" data-sfx="whoosh-down"
+         style="width:120px; height:6px; background:linear-gradient(90deg,var(--orange),var(--purple)); border-radius:3px; margin-bottom:64px;"></div>
+
+    <!-- Body -->
+    <div class="anim" data-fx="slide-up" data-at="3800" data-sfx="pop"
+         style="font-size:42px; color:var(--white60); line-height:1.65; margin-bottom:70px;">{{body}}</div>
+
+    <!-- CTA -->
+    <div class="anim" data-fx="pop" data-at="8600" data-sfx="riser">
+      <div class="anim tag" data-fx="pulse" data-at="9400" data-dur="1600" style="font-size:36px; padding:18px 46px;">MORE QUICK WINS → {{url}}</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-handle">{{handle}}</div>
+    <div class="footer-logo">🚀 HustleUp</div>
+    <div class="footer-url">{{url}}</div>
+  </div>
+</div>

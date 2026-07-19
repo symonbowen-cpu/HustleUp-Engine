@@ -1,4 +1,7 @@
 {
+  "reels": {
+    "days": [1, 3, 5]
+  },
   "brand": {
     "name": "HustleUp",
     "handle": "@hustleupapp",

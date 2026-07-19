@@ -30,9 +30,9 @@ function fill(tpl, data) {
   );
 }
 
-function buildHTML(templateName, data) {
-  const base = fs.readFileSync(path.join(TEMPLATES, "_base.html"), "utf8");
-  const tpl = fs.readFileSync(path.join(TEMPLATES, `${templateName}.html`), "utf8");
+function buildHTML(templateName, data, dir = TEMPLATES) {
+  const base = fs.readFileSync(path.join(dir, "_base.html"), "utf8");
+  const tpl = fs.readFileSync(path.join(dir, `${templateName}.html`), "utf8");
 
   // Fill the content fragment with post data, then insert it into the
   // styled base document at its {{__base}} slot.

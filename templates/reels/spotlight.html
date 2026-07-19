@@ -1,0 +1,48 @@
+<div class="card" data-duration="12000">
+  <div class="glow-tl"></div>
+  <div class="glow-br"></div>
+
+  <div class="content">
+    <!-- Eyebrow -->
+    <div class="anim" data-fx="slide-down" data-at="350" data-sfx="whoosh-up"
+         style="font-family:'Boogaloo',cursive; font-size:34px; letter-spacing:5px; color:var(--white40); margin-bottom:44px;">
+      💰 HUSTLE SPOTLIGHT
+    </div>
+
+    <!-- Hustle identity -->
+    <div class="anim" data-fx="pop" data-at="950" data-sfx="pop" style="display:flex; align-items:center; gap:30px; margin-bottom:60px;">
+      <div style="width:120px; height:120px; border-radius:28px; background:linear-gradient(135deg,var(--orange),var(--orange2)); display:flex; align-items:center; justify-content:center; font-size:64px;">{{emoji}}</div>
+      <div>
+        <div style="font-family:'Boogaloo',cursive; font-size:64px; color:#fff;">{{hustle}}</div>
+        <div style="font-size:30px; color:var(--white60); margin-top:6px;">First $ in {{timeToFirst}}</div>
+      </div>
+    </div>
+
+    <!-- Earning card -->
+    <div class="anim" data-fx="punch" data-at="1900" data-dur="750" data-sfx="ding"
+         style="background:rgba(255,107,53,0.08); border:2px solid rgba(255,107,53,0.35); border-radius:28px; padding:52px 60px; margin-bottom:56px;">
+      <div style="font-family:'Boogaloo',cursive; font-size:30px; letter-spacing:4px; color:var(--white40); margin-bottom:14px;">EARNING POTENTIAL</div>
+      <div data-countup data-at="1900" data-dur="1100"
+           style="font-family:'Boogaloo',cursive; font-size:150px; line-height:1; background:linear-gradient(135deg,#FF6B35,#FFD700); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">{{earning}}</div>
+    </div>
+
+    <!-- Body -->
+    <div class="anim" data-fx="slide-up" data-at="4200" data-sfx="whoosh-up"
+         style="font-size:38px; color:var(--white60); line-height:1.6; margin-bottom:56px;">{{body}}</div>
+
+    <!-- Hook -->
+    <div class="anim" data-fx="wipe" data-at="6400" data-dur="800" data-sfx="whoosh-down"
+         style="font-family:'Boogaloo',cursive; font-size:52px; color:var(--orange); line-height:1.25;">{{hook}}</div>
+
+    <!-- CTA -->
+    <div class="anim" data-fx="pop" data-at="8800" data-sfx="riser" style="margin-top:70px;">
+      <div class="anim tag" data-fx="pulse" data-at="9600" data-dur="1600" style="font-size:36px; padding:18px 46px;">GET THE ROADMAP → {{url}}</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-handle">{{handle}}</div>
+    <div class="footer-logo">🚀 HustleUp</div>
+    <div class="footer-url">{{url}}</div>
+  </div>
+</div>
