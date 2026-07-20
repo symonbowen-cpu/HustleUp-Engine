@@ -91,13 +91,29 @@ jobs:
               ? `![Reel Preview](${raw}/preview.gif)\n\n🎬 **[▶ Watch the full reel with sound](${raw}/post.mp4)** (${post.media.durationSec}s, track: ${post.media.music})`
               : `![Post Preview](${raw}/post.png)`;
 
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `${isReel ? '🎬 Daily Reel' : '📸 Daily Post'} — ${new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'})}`,
-              body: `## Today's HustleUp ${isReel ? 'Reel' : 'Post'}\n\n**Pillar:** ${post.pillar}\n**Topic:** ${post.topic}\n\n${preview}\n\n**Caption:**\n\`\`\`\n${post.caption}\n\`\`\`\n\n---\n\nComment \`/approve\` to publish to Instagram.\nComment \`/skip\` to discard this post.`,
-              labels: ['content-approval']
-            });
+            // retry: a transient GitHub API 5xx here would otherwise waste the
+            // whole (already committed) generation
+            const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+            let lastErr;
+            for (let attempt = 1; attempt <= 5; attempt++) {
+              try {
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: `${isReel ? '🎬 Daily Reel' : '📸 Daily Post'} — ${new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'})}`,
+                  body: `## Today's HustleUp ${isReel ? 'Reel' : 'Post'}\n\n**Pillar:** ${post.pillar}\n**Topic:** ${post.topic}\n\n${preview}\n\n**Caption:**\n\`\`\`\n${post.caption}\n\`\`\`\n\n---\n\nComment \`/approve\` to publish to Instagram.\nComment \`/skip\` to discard this post.`,
+                  labels: ['content-approval']
+                });
+                lastErr = null;
+                break;
+              } catch (e) {
+                lastErr = e;
+                if (e.status && e.status < 500) throw e; // real error, don't retry
+                console.log(`Issue creation attempt ${attempt} failed (${e.status || e.message}), retrying in ${attempt * 30}s...`);
+                await sleep(attempt * 30000);
+              }
+            }
+            if (lastErr) throw lastErr;
 
   approve:
     runs-on: ubuntu-latest
