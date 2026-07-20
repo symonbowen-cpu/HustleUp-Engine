@@ -1,14 +1,15 @@
 {
-  "postCount": 6,
-  "pillarIndex": 6,
+  "postCount": 7,
+  "pillarIndex": 0,
   "topicIndexes": {
     "hustle_spotlight": 1,
     "myth_bust": 1,
     "quick_win": 1,
     "stat": 1,
     "confidence": 1,
-    "feature_reveal": 1
+    "feature_reveal": 1,
+    "gift_angle": 1
   },
-  "lastPosted": "2026-07-20T01:13:11.900Z",
+  "lastPosted": "2026-07-20T01:24:11.054Z",
   "history": []
 }
