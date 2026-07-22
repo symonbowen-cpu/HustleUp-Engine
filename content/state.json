@@ -1,6 +1,6 @@
 {
-  "postCount": 9,
-  "pillarIndex": 2,
+  "postCount": 10,
+  "pillarIndex": 3,
   "topicIndexes": {
     "hustle_spotlight": 2,
     "myth_bust": 2,
@@ -8,8 +8,9 @@
     "stat": 1,
     "confidence": 1,
     "feature_reveal": 1,
-    "gift_angle": 1
+    "gift_angle": 1,
+    "parent_win": 1
   },
-  "lastPosted": "2026-07-21T17:28:37.336Z",
+  "lastPosted": "2026-07-22T17:27:06.101Z",
   "history": []
 }
