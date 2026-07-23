@@ -2,9 +2,10 @@ name: Daily Instagram Post
 
 on:
   schedule:
-    # 9am Pacific Time (UTC-7/8) = 4pm or 5pm UTC
-    # Adjust for your timezone
+    # Twice daily, Pacific Time (UTC-7/8):
+    # 9am PT = 16:00 UTC, 5pm PT = 00:00 UTC (next day)
     - cron: '0 16 * * *'
+    - cron: '0 0 * * *'
   workflow_dispatch:  # manual trigger for testing
     inputs:
       format:
@@ -144,6 +145,12 @@ jobs:
             const body = context.payload.issue.body;
             const match = body.match(/\/([a-f0-9]{40})\/out/);
             return match ? match[1] : 'main';
+
+      - name: Use the approved post's own media + caption
+        if: steps.get_sha.outputs.result != 'main'
+        run: |
+          git fetch origin ${{ steps.get_sha.outputs.result }}
+          git checkout ${{ steps.get_sha.outputs.result }} -- out/pending
 
       - name: Publish to Instagram + Facebook
         env:

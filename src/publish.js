@@ -13,6 +13,7 @@
  *   IMAGE_PUBLIC_URL     — optional override URL (static posts)
  *   VIDEO_PUBLIC_URL     — optional override URL (reels)
  *   IG_GRAPH_HOST        — graph.instagram.com (Route A) or graph.facebook.com (Route B, default)
+ *   STORY_ENABLED        — set to "false" to skip the Instagram Story ride-along
  *
  * Publishes to every platform whose credentials are present (one approval,
  * all angles). A platform with missing secrets is skipped with a log line.
@@ -101,6 +102,35 @@ async function publishInstagram(post, mediaUrl, isReel) {
   }
 }
 
+// ── Instagram Story (same media, posted right after the feed publish) ──
+async function publishInstagramStory(mediaUrl, isReel) {
+  const { IG_USER_ID, IG_ACCESS_TOKEN } = process.env;
+  const container = await graph(`${IG_USER_ID}/media`, isReel
+    ? { media_type: "STORIES", video_url: mediaUrl, access_token: IG_ACCESS_TOKEN }
+    : { media_type: "STORIES", image_url: mediaUrl, access_token: IG_ACCESS_TOKEN });
+  console.log(`  IG story container created: ${container.id}`);
+
+  if (isReel) {
+    await waitForContainer(container.id, IG_ACCESS_TOKEN);
+  } else {
+    await sleep(8000);
+  }
+
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    try {
+      const published = await graph(`${IG_USER_ID}/media_publish`, {
+        creation_id: container.id,
+        access_token: IG_ACCESS_TOKEN,
+      });
+      return published.id;
+    } catch (e) {
+      if (attempt === 4) throw e;
+      console.log(`  IG story attempt ${attempt} not ready, retrying in 10s...`);
+      await sleep(10000);
+    }
+  }
+}
+
 // ── Facebook Page ──
 async function publishFacebook(post, mediaUrl, isReel) {
   const { FB_PAGE_ID, FB_PAGE_ACCESS_TOKEN } = process.env;
@@ -152,6 +182,19 @@ async function publishFacebook(post, mediaUrl, isReel) {
     } catch (e) {
       failures.push(`Instagram: ${e.message}`);
       console.error(`❌ Instagram failed: ${e.message}`);
+    }
+
+    // story ride-along: only after a successful feed publish, and a story
+    // failure is a warning, not a failed run
+    if (results.instagram && process.env.STORY_ENABLED !== "false") {
+      try {
+        console.log("📖 Posting to Instagram Story...");
+        results.instagram_story = await publishInstagramStory(mediaUrl, isReel);
+        console.log(`✅ Story posted: ${results.instagram_story}`);
+      } catch (e) {
+        failures.push(`Instagram story: ${e.message}`);
+        console.error(`⚠️ Story failed (feed post is live): ${e.message}`);
+      }
     }
   } else {
     console.log("⏭️ Instagram skipped (no IG_USER_ID/IG_ACCESS_TOKEN)");
