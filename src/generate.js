@@ -213,6 +213,28 @@ async function renderPNG(templateName, data, outPath) {
   }
 }
 
+// ── render 9:16 story PNG (vertical reel template, final frame) ──
+// A 1:1 image zoomed into the story frame crops both sides; this renders a
+// true 1080x1920 version so stories always fit the frame.
+async function renderStoryPNG(templateName, data, outPath) {
+  const REELS = path.join(__dirname, "..", "templates", "reels");
+  const html = buildHTML(templateName, data, REELS);
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox", "--force-color-profile=srgb"],
+  });
+  try {
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1080, height: 1920, deviceScaleFactor: 1 });
+    await page.setContent(html, { waitUntil: "networkidle0" });
+    await page.evaluate(() => document.fonts.ready);
+    // jump the animation timeline to its settled end state
+    await page.evaluate(() => window.__seek(11000));
+    await page.screenshot({ path: outPath, type: "png" });
+  } finally {
+    await browser.close();
+  }
+}
+
 // ── main ──
 (async () => {
   const cfg = themes();
@@ -239,7 +261,9 @@ async function renderPNG(templateName, data, outPath) {
   } else {
     const imgPath = path.join(PENDING, "post.png");
     await renderPNG(pillar.template, copy, imgPath);
-    media = { image: "post.png" };
+    const storyPath = path.join(PENDING, "story.png");
+    await renderStoryPNG(pillar.template, copy, storyPath);
+    media = { image: "post.png", story: "story.png" };
   }
 
   const caption =

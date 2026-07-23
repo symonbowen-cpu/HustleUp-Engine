@@ -185,11 +185,14 @@ async function publishFacebook(post, mediaUrl, isReel) {
     }
 
     // story ride-along: only after a successful feed publish, and a story
-    // failure is a warning, not a failed run
+    // failure is a warning, not a failed run. Reels are already 9:16; static
+    // posts use the dedicated vertical story.png so nothing gets cropped.
     if (results.instagram && process.env.STORY_ENABLED !== "false") {
       try {
-        console.log("📖 Posting to Instagram Story...");
-        results.instagram_story = await publishInstagramStory(mediaUrl, isReel);
+        const storyFile = isReel ? "post.mp4" : (post.media?.story || "post.png");
+        const storyUrl = mediaUrl.replace(/[^/]+$/, storyFile);
+        console.log(`📖 Posting to Instagram Story (${storyFile})...`);
+        results.instagram_story = await publishInstagramStory(storyUrl, isReel);
         console.log(`✅ Story posted: ${results.instagram_story}`);
       } catch (e) {
         failures.push(`Instagram story: ${e.message}`);
@@ -222,7 +225,7 @@ async function publishFacebook(post, mediaUrl, isReel) {
   fs.mkdirSync(PUBLISHED, { recursive: true });
   const ext = isReel ? "mp4" : "png";
   fs.renameSync(path.join(PENDING, mediaFile), path.join(PUBLISHED, `${stamp}.${ext}`));
-  for (const extra of ["preview.gif"]) {
+  for (const extra of ["preview.gif", "story.png"]) {
     const p = path.join(PENDING, extra);
     if (fs.existsSync(p)) fs.unlinkSync(p);
   }
