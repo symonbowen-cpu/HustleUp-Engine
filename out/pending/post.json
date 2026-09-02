@@ -1,23 +1,22 @@
 {
-  "createdAt": "2026-09-01T19:19:28.528Z",
+  "createdAt": "2026-09-02T02:05:36.188Z",
   "format": "reel",
-  "pillar": "feature_reveal",
-  "template": "feature",
-  "topic": "The 5-question quiz that matches your teen to the right hustle",
-  "caption": "Most teens don't know where to start. That's not laziness — that's just never having been shown a clear path.\n\nHustleUp's 5-question quiz matches your teen to a side hustle based on their skills, schedule, and personality.\n\nIn under 2 minutes, they go from \"I don't know what to do\" to a real plan with real earning potential.\n\nOne quiz. One direction. $19.99 once. See how it works → hustleup.us\n\n#parentingteens #raisingteens #teenentrepreneur #lifeskills #moneyskills #sidehustle #teenmoney #confidentkids #teenconfidence #raisingentrepreneurs #hustleup #parentingwin #teengoals",
-  "alt_text": "A phone screen displaying a short quiz with the question 'What does your teen enjoy most?' and multiple choice answers, set against a clean, modern app interface.",
+  "pillar": "gift_angle",
+  "template": "tip",
+  "topic": "$19.99 once vs $70 for a video game they'll forget by summer",
+  "caption": "You'll spend $70 on a video game your teen plays for six weeks.\n$19.99 once gets them lifetime access to real skills, real hustle ideas, and their first paycheck.\nThe game collects dust. The confidence doesn't.\nGive them a head start → hustleup.us\n\n#parentingteens #raisingteens #teenentrepreneur #lifeskills #moneyskills #sidehustle #teenmoney #parentingwin #screentime #raisingentrepreneurs #futureready #hustleup #parentingvalue #teensidehustle",
+  "alt_text": "A side-by-side graphic showing a $70 video game case on the left and the HustleUp app on a phone screen on the right, with $19.99 lifetime access displayed beneath it.",
   "media": {
     "video": "post.mp4",
     "preview": "preview.gif",
     "durationSec": 12,
-    "music": "spark.m4a"
+    "music": "hype.m4a"
   },
   "copy": {
-    "eyebrow": "INSIDE HUSTLEUP",
-    "feature_name": "Hustle Match Quiz",
-    "headline": "5 questions to find your teen's perfect hustle",
-    "body": "No guessing, no overwhelm. The quiz reads your teen's strengths and spits out the hustle they're most likely to actually stick with.",
-    "caption": "Most teens don't know where to start. That's not laziness — that's just never having been shown a clear path.\n\nHustleUp's 5-question quiz matches your teen to a side hustle based on their skills, schedule, and personality.\n\nIn under 2 minutes, they go from \"I don't know what to do\" to a real plan with real earning potential.\n\nOne quiz. One direction. $19.99 once. See how it works → hustleup.us",
+    "eyebrow": "SMART MONEY MOVE",
+    "headline": "One payment teaches more than any game will",
+    "body": "A $70 game is forgotten by July. HustleUp's $19.99 lifetime access teaches your teen to earn real money through lawn care, reselling, or freelance gigs — skills that compound.",
+    "caption": "You'll spend $70 on a video game your teen plays for six weeks.\n$19.99 once gets them lifetime access to real skills, real hustle ideas, and their first paycheck.\nThe game collects dust. The confidence doesn't.\nGive them a head start → hustleup.us",
     "hashtags": [
       "#parentingteens",
       "#raisingteens",
@@ -26,14 +25,15 @@
       "#moneyskills",
       "#sidehustle",
       "#teenmoney",
-      "#confidentkids",
-      "#teenconfidence",
-      "#raisingentrepreneurs",
-      "#hustleup",
       "#parentingwin",
-      "#teengoals"
+      "#screentime",
+      "#raisingentrepreneurs",
+      "#futureready",
+      "#hustleup",
+      "#parentingvalue",
+      "#teensidehustle"
     ],
-    "alt_text": "A phone screen displaying a short quiz with the question 'What does your teen enjoy most?' and multiple choice answers, set against a clean, modern app interface.",
+    "alt_text": "A side-by-side graphic showing a $70 video game case on the left and the HustleUp app on a phone screen on the right, with $19.99 lifetime access displayed beneath it.",
     "handle": "@hustleupapp",
     "url": "hustleup.us",
     "tagline": "Real steps. Real earnings. Real skills."
