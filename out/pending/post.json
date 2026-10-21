@@ -1,23 +1,22 @@
 {
-  "createdAt": "2026-10-20T19:56:49.633Z",
+  "createdAt": "2026-10-21T02:36:59.882Z",
   "format": "reel",
-  "pillar": "feature_reveal",
-  "template": "feature",
-  "topic": "The earnings tracker that shows you real progress, not promises",
-  "caption": "Most apps show your teen what's possible. HustleUp shows them what they've actually built.\n\nThe earnings tracker logs real income from real work, so your teen can see their own momentum grow.\n\nThere's nothing like watching a kid realize their effort has a number attached to it.\n\nOne payment of $19.99 unlocks this for life. See how it works → hustleup.us\n\n#parentingteens #raisingteens #teenparenting #momsofteens #lifeskills #moneyskills #financialliteracy #teenconfidence #teenmoney #sidehustle #hustleup #motivatedteens #realresults #teenearnings",
-  "alt_text": "A clean app screen displaying a teen's earnings tracker with logged income entries, a running total, and a simple progress chart showing growth over several weeks.",
+  "pillar": "gift_angle",
+  "template": "tip",
+  "topic": "Cheaper than one month of their subscriptions — teaches skills for life",
+  "caption": "You probably spend more on their streaming subscriptions this month than you will ever spend on HustleUp.\n\nOne payment of $19.99 gives your teen lifetime access to real side hustle skills — lawn care, reselling, pet sitting, and more.\n\nKids who learn to earn early build confidence that no subscription can teach.\n\nGive them a head start → hustleup.us\n\n#parentingteens #raisingteens #teenparenting #momsofteens #lifeskills #moneyskills #financialliteracy #sidehustle #teenmoney #parentingwin #screentime #hustleup #teenentrepreneur #raisingentrepreneurs",
+  "alt_text": "A parent and teen sitting at a kitchen table together, looking at a phone or laptop with a calm and engaged expression, suggesting a purposeful and connected moment.",
   "media": {
     "video": "post.mp4",
     "preview": "preview.gif",
     "durationSec": 12,
-    "music": "momentum.m4a"
+    "music": "spark.m4a"
   },
   "copy": {
-    "eyebrow": "INSIDE HUSTLEUP",
-    "feature_name": "Earnings Tracker",
-    "headline": "See real dollars earned, not just potential",
-    "body": "The HustleUp earnings tracker logs every dollar your teen makes so progress is visible, measurable, and genuinely theirs.",
-    "caption": "Most apps show your teen what's possible. HustleUp shows them what they've actually built.\n\nThe earnings tracker logs real income from real work, so your teen can see their own momentum grow.\n\nThere's nothing like watching a kid realize their effort has a number attached to it.\n\nOne payment of $19.99 unlocks this for life. See how it works → hustleup.us",
+    "eyebrow": "SMART SPEND",
+    "headline": "Costs Less Than One Month of Subscriptions",
+    "body": "Netflix, Spotify, game passes — parents spend $30-60/month on entertainment. HustleUp is $19.99 once, and teaches your teen to earn real money through proven side hustles.",
+    "caption": "You probably spend more on their streaming subscriptions this month than you will ever spend on HustleUp.\n\nOne payment of $19.99 gives your teen lifetime access to real side hustle skills — lawn care, reselling, pet sitting, and more.\n\nKids who learn to earn early build confidence that no subscription can teach.\n\nGive them a head start → hustleup.us",
     "hashtags": [
       "#parentingteens",
       "#raisingteens",
@@ -26,15 +25,15 @@
       "#lifeskills",
       "#moneyskills",
       "#financialliteracy",
-      "#teenconfidence",
-      "#teenmoney",
       "#sidehustle",
+      "#teenmoney",
+      "#parentingwin",
+      "#screentime",
       "#hustleup",
-      "#motivatedteens",
-      "#realresults",
-      "#teenearnings"
+      "#teenentrepreneur",
+      "#raisingentrepreneurs"
     ],
-    "alt_text": "A clean app screen displaying a teen's earnings tracker with logged income entries, a running total, and a simple progress chart showing growth over several weeks.",
+    "alt_text": "A parent and teen sitting at a kitchen table together, looking at a phone or laptop with a calm and engaged expression, suggesting a purposeful and connected moment.",
     "handle": "@hustleupapp",
     "url": "hustleup.us",
     "tagline": "Real steps. Real earnings. Real skills."
